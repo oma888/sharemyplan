@@ -1,3 +1,4 @@
+sav_new.html.erb
 
 <div class="container payment-container mt-4">
 <h4 class="py-3" style="text-align: center;">Récapitulatif de ta souscription</h4>
@@ -8,21 +9,12 @@
 
       <div class="right-payment px-3 py-3">
 
-      <div class="right-payment px-3 py-3">
-
         <p>
           <i class="fas fa-cube"></i> <b>Service :</b> <%= @cotisation.subscription.service.name %>
         </p>
         <p>
           <i class="fas fa-user-check"></i> <b>Shareur :</b> <%= @cotisation.user.first_name %>
         </p>
-
-        <p> <b>mail :</b> <%= @cotisation.user.email %></p>
-
-        <p> <b>Premium :</b> <%= @cotisation.user.premium_until %></p>
-
-        <p> <b>Stripe :</b> <%= @cotisation.user.stripe_token %></p>
-
         <p>
           <i class="fas fa-euro-sign"></i> <b>Tarif mensuel :</b> <strong><%= (@cotisation.price_cents / 100.0).round(2) %> €</strong>
         </p>
@@ -39,6 +31,23 @@
             });
          </script>
 
+
+
+        <%= form_tag subscriptions_path do %>
+          <% if current_user.stripe_token %>
+            <p class="text-center">
+              <%= submit_tag t('premium.pay'), class: 'btn btn-primary btn-lg' %>
+            </p>
+          <% else %>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+                data-image="<%= image_url 'favicon.png' %>"
+                data-name="iSignif SAS"
+                data-description="Compte premium pendant un mois"
+                data-email="<%= @cotisation.user.ser.email %>"
+                data-locale="auto"></script>
+          <% end %>
+        <% end %>
 
 
         <%= link_to cotisation_path(@cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment abandonner votre achat ?"}, class: "btn btn-hp mr-2" do %>

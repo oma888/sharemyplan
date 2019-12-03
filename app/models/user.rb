@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  before_create :increment_premium
   mount_uploader :photo, PhotoUploader
 
   # Include default devise modules. Others available are:
@@ -12,4 +13,10 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :notifications
 
+  def increment_premium
+    if premium_until.nil? || (premium_until < Date.today)
+      self.premium_until = Date.today
+    end
+    # self.premium_until += 1.month
+  end
 end
