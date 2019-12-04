@@ -16,7 +16,7 @@ class CotisationsController < ApplicationController
       payment_method_types: ['card'],
       line_items: [{
         name: @cotisation.subscription.name,
-        images: ['/assets/#{@cotisation.subscription.service.photo}'],
+        images: [@cotisation.subscription.service.photo],
         # images: ['#{@cotisation.subscription.service.photo}'],
         # images: [image_url(@cotisation.subscription.service.photo)],
         # images: [cl_image_tag(@cotisation.subscription.service.photo)],
@@ -25,7 +25,8 @@ class CotisationsController < ApplicationController
         quantity: 1
       }],
       success_url: cotisation_url(@cotisation),
-      cancel_url: cotisation_url(@cotisation)
+      cancel_url: cotisation_url(@cotisation),
+      customer_email: @cotisation.user.email
     )
     @cotisation.update(checkout_session_id: session.id)
   end
