@@ -125,7 +125,14 @@ puts "Creating services"
 
 service_array = Service.all
 
-netflix_premium = Service.create!(name: 'Netflix Premium',  number_of_places: '4',    total_price: '15,99',    category: 'vosd',        description: 'Service de vosd en ligne',                      photo: 'netflix-premium.png')
+netflix_premium = Service.create!(
+  name:             'Netflix Premium',
+  number_of_places: '4',
+  total_price:      '15,99',
+  category:         'vosd',
+  description:      'Service de vosd en ligne',
+  photo:            'netflix-premium.png',
+)
 netflix_standard = Service.create!(name: 'Netflix Standard', number_of_places: '2',    total_price: '10',    category: 'vosd',        description: 'Service de vosd en ligne',                      photo: 'netflix-standard.png')
 ocs = Service.create!(name: 'OCS',              number_of_places: '4',    total_price: '12',    category: 'vosd',        description: 'Service de vosd en ligne',                      photo: 'ocs.png')
 spotify_family = Service.create!(name: 'Spotify family',   number_of_places: '6',    total_price: '14',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'spotify.png')

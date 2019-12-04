@@ -80,34 +80,33 @@ class CotisationsController < ApplicationController
     @subscription.user.save
   end
 
+def stripe_checkout_session
+  @stripe_checkout_session ||= Stripe::Checkout::Session.create(
+    payment_method_types: ["card"],
+
+    locale: :fr,
+    customer: @company.stripe_id,
+    success_url: cotisation_url(@cotisation),
+    cancel_url: cotisation_url(@cotisation)
+  )
+  end
+
   def init_session
     # n est pas appelee en ce moment mais fonctionne
     # fait partie du paiement standard vers stripe (pas de l abonnement !)
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
-      line_items: [{
-        name: @cotisation.subscription.name,
-        # aucune image ne s'affiche dans cet ecran, à régler !!!!!!!!!!!!!!
-        # images: ['/assets/#{@cotisation.subscription.service.photo}'],
-        # images: ['#{@cotisation.subscription.service.photo}'],
-        # images: [image_url '#{@cotisation.subscription.service.photo}'],
-        # images: [cl_image_tag(@cotisation.subscription.service.photo)],
-        amount: @cotisation.price_cents,
-        currency: 'eur',
-        quantity: 1
-      }],
+      subscription_data: {
+        items: [{
+          plan: "plan_GIZVizVHFEes7d"
+        }]
+      },
       success_url: cotisation_url(@cotisation),
       cancel_url: cotisation_url(@cotisation),
-      # billing_address_collection: { zipcode: '59800', city: 'Lille' },
-      # customer_name: @subscription.user.last_name,
-      # mode: 'subscription',
-      # subscription_data:  subscription_data.items.plan
-      # customer: @customer.id, # remarque soit on spécifie l customer.id, soit l'email
       customer_email: @cotisation.user.email
     )
     @cotisation.update(checkout_session_id: session.id)
-
     return session
   end
 
@@ -123,8 +122,12 @@ class CotisationsController < ApplicationController
     @amount = @cotisation.price_cents
 
     begin
-      stripe_subs_token = Stripe::Subscription.create({ customer: customer.id,
-                                    items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]})
+      stripe_subs_token = Stripe::Subscription.create(
+        {
+          customer: customer.id,
+          items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]
+        }
+      )
 
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: Rails.application.secrets.stripe[:premium_plan_id] }])
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: ENV['STRIPE_SECRET_KEY'] }])
@@ -146,7 +149,7 @@ class CotisationsController < ApplicationController
           email: user.email
           # payment_method:  ['card'],
           # invoice_settings: { default_payment_method: 'card', },
-          })
+      })
 
       user.update! stripe_token: customer.id
     end
