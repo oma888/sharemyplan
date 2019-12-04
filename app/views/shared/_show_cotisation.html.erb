@@ -1,0 +1,68 @@
+<div class="modal fade" id="modal-cotisation" tabindex="-1" role="dialog" aria-labelledby="<%= cotisation.id %>" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 100%;">
+    <div class="modal-content" style="background-color: transparent;">
+
+    <div class="cotisation-card" style="margin: 0 auto; width: 85%">
+
+    <div class="cotisation-card-header pt-2 d-flex justify-content-center align-items-center">
+      <div class="cotisation-title py-2" style="width: 95%; text-align: center;">
+        <h3>Détail de ton abonnement <%= cotisation.subscription.name %> (co-abonné)</h3>
+      </div>
+      <div class="back ml-2 py-2" style="width: 5%; text-align: center;">
+        <a href="/dashboard"><i class="far fa-times-circle" style="color: white; font-size: 1.4em;"></i></a>
+      </div>
+    </div>
+
+    <div class="cotisation-card-body d-flex flex-wrap mt-3" style="border-bottom: 1px solid #e3e4e5">
+      <div class="cotisation-logo d-flex align-items-center justify-content-center" style="text-align: center; height: 180px;">
+        <%= image_tag(cotisation.subscription.service.photo, height: '100', width: '200')%>
+      </div>
+      <div class="cotisation-infos py-3 pl-3" style="color: black">
+          <p><i class="fas fa-user"></i> <b>Ton shareur</b> : <%= cotisation.subscription.user.first_name %></p>
+          <p><i class="fas fa-tv"></i> <b>Abo :</b><%= cotisation.subscription.service.name %></p>
+          <p><i class="fas fa-at"></i> <b>Identifiant : </b> <%= cotisation.subscription.identifiant %></p>
+          <p><i class="fas fa-fingerprint"></i> <b>Mot de passe :</b> <%= cotisation.subscription.password %></p>
+          <p><i class="fas fa-money-bill-wave"></i></i> <b>Statut du paiement : </b> à jour</p>
+      </div>
+      <div class="cotisation-buttons py-3 pl-1 d-flex justify-content-center">
+        <div class="button-left mr-2">
+          <a class="btn btn-contact" href="mailto:<%=cotisation.subscription.user.email %>">Contacter <%= cotisation.subscription.user.first_name %></a><br><br>
+          <a class="btn btn-abus" href="mailto:contact@sharemyplan.site %>">Signaler un abus</a>
+        </div>
+        <div class="buton-rigth mr-2">
+          <%= link_to 'Me retirer de ce share', cotisation_path(cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment vous retirer de cette abonnement ?" }, class: 'btn btn-destroy' %> <br> <br>
+          <%= link_to 'Laisser un avis', new_cotisation_review_path(cotisation), class: 'btn btn-avis' %>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cotisation-card-footer mt-4">
+      <h4 class="mb-4">Tes co-abonnés</h4>
+
+      <div class="card-co-abo d-flex align-items-center justify-content-around mx-4">
+
+          <% cotisation.subscription.cotisations.each do |cotisation| %>
+            <div class="co-abos-card mb-3" style="text-align: center;">
+              <% if cotisation.user.photo? %>
+                <img class="avatar" src="<%= cotisation.user.photo %>" >
+              <% else %>
+                <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
+              <% end %>
+              <br>
+              <i><%= cotisation.user.first_name %></i>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>

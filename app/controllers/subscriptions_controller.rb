@@ -3,8 +3,12 @@ class SubscriptionsController < ApplicationController
     # @subscriptions = policy_scope(Subscription)
     # policy scope pas necessaire ici car pas de filtre par type de user
 
-    @service       = Service.find(params[:service_id])
-    @subscriptions = Subscription.where(service: @service)
+    @service            = Service.find(params[:service_id])
+    # @subscriptions      = Subscription.where(service: @service).sort_by { |subscription| subscription.average_rating }.reverse
+    # Refacto by Alex
+
+    @subscriptions      = Subscription.where(service: @service).sort_by(&:average_rating).reverse
+
     @full_subscriptions = Subscription.where(service: @service).where(available_places: 0)
   end
 

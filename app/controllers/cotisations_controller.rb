@@ -89,11 +89,22 @@ class CotisationsController < ApplicationController
     @subscription.available_places += 1
     @subscription.save
     @cotisation.destroy
+
     redirect_to dashboard_path
   end
 
   def cotisation_price_per_month(service)
     (service.total_price * 100 / service.number_of_places) + 30
+  end
+
+  def suppression
+    @cotisation = Cotisation.find(params[:id])
+    authorize @cotisation
+    @subscription = @cotisation.subscription
+    @subscription.available_places += 1
+    @subscription.save
+    @cotisation.destroy
+    redirect_to dashboard_path
   end
 
   private

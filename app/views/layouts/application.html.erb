@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Partager vos abonnements | Profitez des abonnements des autres</title>
     <meta name="description" content="Pas envie de vous ruiner à payer tous les abonnements possibles, économisez en partageant avec : Sharemyplan est fait pour vous. Classée meilleure site de partage.">
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -18,10 +17,18 @@
     <meta property="og:image" content="share_my_plan_hp.png">
     <meta property="og:description" content="Partager vos abonnements, profitez des abonnements des autres et économisez de l'argent">
 
+
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pay less, Enjoy more !</title>
+
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,800,800i|Open+Sans:400,600,700i,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+
     <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
   </head>
   <body>
@@ -32,6 +39,7 @@
       <%= yield %>
     </div>
     <%= render 'shared/footer' %>
+
     <%= javascript_include_tag 'application' %>
     <%= javascript_pack_tag 'application' %>
   </body>

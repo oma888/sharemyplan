@@ -2,26 +2,22 @@
   <div class="d-flex flex-wrap mt-1">
 
     <div class="show-left-sub">
-
       <div class="mx-3 pt-3 pb-1" style="color: #4281A4; font-weight: bold;">
         <h4>Tarification</h4>
       </div>
 
       <div class="mx-5 my-2" >
         <p  style="font-size: 1.3em; color: #48A9A6; font-weight: bold;">
-          <%= @service.total_price.fdiv(@service.number_of_places).round(2)+ 0.30 %>
-        €/mois</p>
+          <%= @service.total_price.fdiv(@service.number_of_places).round(2)+ 0.30 %>€/mois
+        </p>
       </div>
 
-      <div class="mx-5 my-2" >au lieu de
-        <%=  @service.total_price %>
-      €/mois </div>
-
+      <div class="mx-5 my-2" >
+        au lieu de <%=  @service.total_price %> €/mois
+      </div>
     </div>
 
     <div class="show-middle-sub mt-1">
-
-
       <% if subscription.reviews.any? %>
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="4000">
           <div class="carousel-inner">
@@ -31,14 +27,14 @@
                   <div class="review_display">
                     <div class="content_review">
                      <img class="avatar" src="<%= review.cotisation.user.photo %>"/>
-                      <%= render "shared/stars", note: average(subscription)%>
+                      <%= render "shared/stars", note: review.rating %>
                       <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>                    </div>
                   </div>
                 <% else %>
                   <div class="review_display">
                     <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png">
                     <div class="content_review">
-                      <%= render "shared/stars", note: average(subscription)%>
+                        <%= render "shared/stars", note: review.rating %>
                        <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>
                     </div>
                   </div>
@@ -48,22 +44,22 @@
           </div>
         </div>
       <% else  %>
-
-      <div>
-        <div class="mx-3 pb-1" style="color: #4281A4; font-weight: bold;">
-          <h4>Avis</h4>
+        <div>
+          <div class="mx-3 pb-1" style="color: #4281A4; font-weight: bold;">
+            <h4>Avis</h4>
+          </div>
+          <div class="mx-5 my-2" >
+            <p><i style="font-weight: normal;">Aucun avis pour le moment...</i></p>
+          </div>
         </div>
-        <div class="mx-5 my-2" >
-          <p><i style="font-weight: normal;">Aucun avis pour le moment...</i></p>
-        </div>
-        <% end %>
-      </div>
+      <% end %>
     </div>
 
+
     <div class="show-right-sub">
-
-      <div>  <%= link_to "Rejoindre #{subscription.user.first_name}", subscription_cotisations_path(subscription), class: 'btn btn-rejoindre', method: :post %> </div>
-
+      <div>
+        <%= link_to "Rejoindre #{subscription.user.first_name}", subscription_cotisations_path(subscription), class: 'btn btn-rejoindre', method: :post %>
+      </div>
     </div>
   </div>
 </div>

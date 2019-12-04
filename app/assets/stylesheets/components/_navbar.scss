@@ -5,7 +5,16 @@
 //   opacity: 0.9;
 // }
 
+#notif{
+  color: #4382a4;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
 
+.dropdown-toggle::after {
+    display: none;
+}
 
 .circle-notif {
     width: 20px;
@@ -26,6 +35,8 @@
   opacity: 1;
 }
 
+
+
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
@@ -38,14 +49,22 @@
   width: 40px;
   height: 40px;
 }
+
 .avatar i {
   font-size: 30px;
 }
 
-.navbar {
-  box-shadow: 0 2px 14px rgba(126,87,88,.1), 0 2px 6px rgba(0,0,0,.02);
+.photo_user {
+  border: 1px solid white;
 }
 
+.navbar {
+  box-shadow: 0 2px 14px rgba(126,87,88,.1), 0 2px 6px rgba(0,0,0,.02);
+
+  a {
+    color:#5f6060;
+  }
+}
 
 .navbar-home {
   position: absolute;
@@ -54,6 +73,10 @@
   box-shadow: none;
   .navbar-wagon-link {
     color: white!important;
+    font-weight: bold;
+  }
+  a {
+    color: white;
     font-weight: bold;
   }
 }

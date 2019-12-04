@@ -28,6 +28,9 @@ class CotisationPolicy < ApplicationPolicy
     (record.subscription.user == user) || (record.user == user)
   end
 
+  def suppression?
+    (record.subscription.user == user) || (record.user == user)
+  end
 
   # def edit?
   #   update?

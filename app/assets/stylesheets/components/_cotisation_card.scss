@@ -42,8 +42,9 @@ margin: auto;
 }
 
 .cotisation-infos{
-    margin: 0 auto;
+  margin: 0 auto;
   padding: 0 auto;
+  text-align: initial;
 
 }
 
@@ -131,4 +132,8 @@ margin: auto;
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+.card-co-abo {
+  border-top: none;
 }

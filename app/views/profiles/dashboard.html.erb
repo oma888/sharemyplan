@@ -1,18 +1,17 @@
 <div class="container dashboard-container mt-3 mb-3">
 
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="d-flex justify-content-center align-items-center mt-4" style="flex-direction: column;">
     <% if current_user.photo? %>
-      <img style="width: 50px; height: 50px; border-radius: 50%;" src="<%= current_user.photo %>">
+      <img style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid white;" src="<%= current_user.photo %>">
     <% else %>
       <img style="width: 50px; height: 50px; border-radius: 50%;" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png">
     <% end %>
-    <br>
-    <h2 class="ml-4 mt-4" style="text-align: center; color: white;">Bonjour <%= current_user.first_name %></h2>
+    <h3 class="ml-4 mt-2" style="text-align: center; color: white;">Ravi de vous revoir <%= current_user.first_name %> !</h3>
   </div>
 
-  <div class="dashboard-shareur py-3 mt-4">
+  <div class="dashboard-shareur py-3 mt-3">
     <div class="shareur-title d-flex justify-content-center pb-2">
-      <h4>Mes abonnements en tant que Shareur</h4>
+      <h4 id="abonnements">Mes abonnements en tant que Shareur</h4>
     <div>
     </div>
   </div>
@@ -69,7 +68,8 @@
       </div>
     </div>
     <div class="container mt-3 mx-3">
-      <div class="row d-flex">
+
+      <a id="anchor"> <div class="row d-flex"></a>
         <div class="col-4 left-info-perso ml-4">
           <h5 class="pl-3 mb-3"> Mes coordonnées :</h5>
           <p class="pl-3"><i class="fas fa-user pr-3"></i><b>Identité :</b> <%= current_user.first_name %> <%= current_user.last_name %> </p>

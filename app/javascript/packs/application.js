@@ -9,9 +9,11 @@ import { ecritureHome } from "./plugins/bannerHome";
 
 
 
+
 categoryClicker();
 changePlace();
 someChange();
 // stickyNavigation();
 createNotification();
 ecritureHome();
+

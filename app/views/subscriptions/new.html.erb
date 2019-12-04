@@ -17,7 +17,7 @@
           <div class="subcard-logo mx-3 my-2"><%= image_tag(@service.photo) %> </div>
         </div>
         <div class="subcard-header-right">
-          <div><%= @service.description %></div>
+          <div><i><%= @service.description %></i></div>
         </div>
       </div>
 
@@ -30,9 +30,9 @@
           </div>
 
           <div class="center">
-            <p><strong>Prix / co-abonnés / mois</strong></p>
+            <p><strong>Prix par co-abonné(e)</strong></p>
             <br>
-            <h2 > <strong> <%= @service.total_price.fdiv(@service.number_of_places).round(2)%>€ </strong> </h2>
+            <h2 > <strong> <%= @service.total_price.fdiv(@service.number_of_places).round(2)%>€ </strong> <span style="font-size: 0.5em;">/mois </span> </h2>
           </div>
 
           <div class="place">

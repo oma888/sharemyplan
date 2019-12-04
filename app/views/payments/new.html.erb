@@ -9,18 +9,18 @@
       <div class="right-payment px-3 py-3">
 
         <p>
-          <i class="fas fa-cube"></i> <b>Service :</b> <%= @cotisation.subscription.service.name %>
+          <i class="fas fa-share-alt mr-2"></i> <b>Service :</b> <%= @cotisation.subscription.service.name %>
         </p>
         <p>
-          <i class="fas fa-user-check"></i> <b>Shareur :</b> <%= @cotisation.user.first_name %>
+          <i class="fas fa-user-check mr-2"></i> <b>Shareur :</b> <%= @cotisation.subscription.user.first_name %>
         </p>
         <p>
-          <i class="fas fa-euro-sign"></i> <b>Tarif mensuel :</b> <strong><%= (@cotisation.price_cents / 100.0).round(2) %> €</strong>
+          <i class="fas fa-euro-sign mr-3"></i> <b>Tarif mensuel :</b> <strong><%= (@cotisation.price_cents / 100.0).round(2) %> €</strong>
         </p>
 
         <button id="pay" class="btn btn-hp mr-2">Payer</button>
 
-        <%= link_to cotisation_path(@cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment abandonner votre achat ?"}, class: "btn btn-hp mr-2" do %>
+        <%= link_to cotisation_path(@cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment abandonner votre achat ?"}, class: "btn btn-cancel mr-2" do %>
         Annuler
         <% end %>
 

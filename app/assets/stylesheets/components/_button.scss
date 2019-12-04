@@ -6,6 +6,26 @@
   color: white;
 }
 
+.btn-homepage {
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 40px;
+}
+
+.btn-homepage:hover {
+  color: white;
+
+}
+
+.btn-homepage:hover::before {
+  content: ">>>  ";
+}
+
+.btn-homepage:hover::after {
+  content: "  >>>";
+}
+
 .btn-donate {
   color: white;
   background-color: #48A9A6;

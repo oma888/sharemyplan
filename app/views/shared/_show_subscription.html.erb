@@ -1,10 +1,13 @@
-  <div class="container">
 
-  <div class="cotisation-card">
+<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="<%= subscription.id %>" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 100%;">
+    <div class="modal-content" style="background-color: transparent;">
+
+    <div class="cotisation-card" style="margin: 0 auto; width: 85%">
 
     <div class="cotisation-card-header pt-2 d-flex justify-content-center align-items-center">
       <div class="cotisation-title py-2" style="width: 95%; text-align: center;">
-        <h3>Détail de ton abonnement <%= @subscription.name %></h3>
+        <h3>Détail de ton abonnement <%= subscription.name %></h3>
       </div>
       <div class="back ml-2 py-2" style="width: 5%; text-align: center;">
         <a href="/dashboard"><i class="far fa-times-circle" style="color: white; font-size: 1.4em;"></i></a>
@@ -13,14 +16,14 @@
 
     <div class="cotisation-card-body d-flex mt-3 justify-content-center align-items-center" style="border-bottom: 1px solid #e3e4e5">
       <div class="cotisation-logo d-flex align-items-center justify-content-center" style="text-align: center; height: 180px;">
-        <%= image_tag(@subscription.service.photo, height: '100', width: '200')%>
+        <%= image_tag(subscription.service.photo, height: '100', width: '200')%>
       </div>
       <div class="cotisation-infos">
 
           <div class="password-subscription" style="justify-content: flex-start;">
             <p style="text-align: left"><i class="fas fa-info-circle d-flex mr-1"></i><b> Identifiant :</b></p>
-            <p><%= simple_form_for @subscription do |f|%>
-                <%= f.input :identifiant, label: false, input_html: {value: @subscription.identifiant, type: "text", class: "input_password"} %>
+            <p><%= simple_form_for subscription do |f|%>
+                <%= f.input :identifiant, label: false, input_html: {value: subscription.identifiant, type: "text", class: "input_password"} %>
               <% end %>
             </p>
           </div>
@@ -28,31 +31,31 @@
 
           <div class="password-subscription">
             <p><i class="fas fa-fingerprint d-flex mr-1"></i><b> Mot de passe :</b></p>
-            <p><%= simple_form_for @subscription do |f|%>
-                <%= f.input :password, label: false, input_html: {value: @subscription.password, type: "text", class: "input_password"} %>
+            <p><%= simple_form_for subscription do |f|%>
+                <%= f.input :password, label: false, input_html: {value: subscription.password, type: "text", class: "input_password"} %>
               <% end %>
             </p>
           </div>
 
           <div class="password-subscription">
             <p><i class="fas fa-at mr-1"></i> <b> Nombre de place dispo :</b></p>
-             <p><%= simple_form_for @subscription do |f|%>
-                <%= f.input :available_places, label: false, input_html: {value: @subscription.available_places, type: "text", class: "input_password"} %>
+             <p><%= simple_form_for subscription do |f|%>
+                <%= f.input :available_places, label: false, input_html: {value: subscription.available_places, type: "text", class: "input_password"} %>
               <% end %>
             </p>
           </div>
       </div>
       <div class="review" style="text-align:center; width: 25%;">
-            <% if @subscription.reviews.any? %>
+            <% if subscription.reviews.any? %>
               <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="4000">
                 <div class="carousel-inner">
-                  <% @subscription.reviews.each_with_index do |review, index| %>
+                  <% subscription.reviews.each_with_index do |review, index| %>
                     <div class="carousel-item <%= 'active' if index == 0 %>">
                       <% if review.cotisation.user.photo?  %>
                         <div class="review_display">
                           <div class="content_review">
                            <img class="avatar" src="<%= review.cotisation.user.photo %>"/>
-                            <%= render "shared/stars", note: average(@subscription)%>
+                            <%= render "shared/stars", note: average(subscription)%>
                             <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>                    </div>
                         </div>
                       <% else %>
@@ -86,12 +89,12 @@
 <div class="cotisation-card-footer mt-4 d-flex ">
     <div class="card-co-abo align-items-center justify-content-around mx-4" style="max-width: 65%; min-width: 65%; text-align:center;">
       <h4 class="mb-4">Tes co-abonnés</h4>
-        <% if @subscription.cotisations.count < 1 %>
+        <% if subscription.cotisations.count < 1 %>
           <p><i>Tu n'as pas de co-abonné(e) pour le moment</i></p>
         <% else %>
 
           <div class="card-co-abo d-flex align-items-center justify-content-around mx-3">
-            <% @subscription.cotisations.each do |cotisation| %>
+            <% subscription.cotisations.each do |cotisation| %>
                 <div class="d-flex" style="flex-direction: column;">
                   <% if cotisation.user.photo?  %>
                     <img class="avatar" src="<%= cotisation.user.photo %>" style="margin: auto;" >
@@ -114,8 +117,34 @@
       </div>
 
       <div class="card-delete-abo align-items-center justify-content-around mx-4" style="margin: auto; text-align: center; max-width: 30%; min-width: 30%;">
-        <%= link_to "Supprimer l'abonnement", subscription_path(@subscription), method: :delete, data: { confirm: "Souhaitez-vous vraiment supprimer cette abonnement ?" }, class: 'btn btn-destroy' %> <br> <br>
+        <%= link_to "Supprimer l'abonnement", subscription_path(subscription), method: :delete, data: { confirm: "Souhaitez-vous vraiment supprimer cette abonnement ?" }, class: 'btn btn-destroy' %> <br> <br>
       </div>
     </div>
   </div>
+
+
+
+
+    </div>
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
