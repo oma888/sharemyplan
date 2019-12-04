@@ -2,10 +2,21 @@ require 'stripe'
 
 # du site stripe:
 
+def stripe_product_create
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
+
+  Stripe::Product.create({
+    name: 'T-shirt',
+    type: 'good',
+    description: 'Comfortable cotton t-shirt',
+    attributes: ['size', 'gender'],
+  })
+  end
+
 def stripe_customer_creation
   # Set your secret key: remember to change this to your live secret key in production
   # See your keys here: https://dashboard.stripe.com/account/apikeys
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   customer = Stripe::Customer.create({
     email: 'jenny.rosen@example.com',
@@ -17,12 +28,12 @@ def stripe_customer_creation
 end
 
 def stripe_customer_retrieve
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
   Stripe::Customer.retrieve('cus_GIEoFsPVo4Njr7')
 end
 
 def stripe_customer_update
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   Stripe::Customer.update(
     'cus_GIEoFsPVo4Njr7',
@@ -31,12 +42,12 @@ def stripe_customer_update
 end
 
 def stripe_customer_delete
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
   Stripe::Customer.delete('cus_GIEoFsPVo4Njr7')
 end
 
 def stripe_customer_all_list
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   Stripe::Customer.list({limit: 3})
 end
@@ -44,7 +55,7 @@ end
 
 def stripe_subscription_creation
   # creation d un abonnement
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
   Stripe::Subscription.create( {
     customer: 'cus_GIEH88nS6r9xPH',
     items: [ { plan: 'plan_GIDRIFO3ktBxOk' }],
@@ -52,7 +63,7 @@ def stripe_subscription_creation
 end
 
 def stripe_invoice_creation
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   Stripe::Invoice.create({
     customer: 'cus_GIEHOEDnzogW5a',
@@ -60,7 +71,7 @@ def stripe_invoice_creation
 end
 
 def stripe_invoice_retrieve
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   Stripe::Invoice.retrieve(
     'in_1FldpGFQuC36cI611oGAiIlk',
@@ -68,7 +79,7 @@ def stripe_invoice_retrieve
 end
 
 def stripe_invoice_update
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   Stripe::Invoice.update(
     'in_1FldpGFQuC36cI611oGAiIlk',
@@ -79,7 +90,7 @@ end
 def stripe_charge_api
   # Set your secret key: remember to change this to your live secret key in production
   # See your keys here: https://dashboard.stripe.com/account/apikeys
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   charge = Stripe::Charge.create({
     amount: 1000,
@@ -94,7 +105,7 @@ end
 def stripe_payment_api
   # Set your secret key: remember to change this to your live secret key in production
   # See your keys here: https://dashboard.stripe.com/account/apikeys
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   payment_intent = Stripe::PaymentIntent.create({
     payment_method_types: ['card'],
@@ -109,7 +120,7 @@ end
 def stripe_free_application
   # Set your secret key: remember to change this to your live secret key in production
   # See your keys here: https://dashboard.stripe.com/account/apikeys
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   payment_intent = Stripe::PaymentIntent.create({
   payment_method_types: ['card'],
@@ -126,7 +137,7 @@ end
 def stripe_refunds_issuing
   # Set your secret key: remember to change this to your live secret key in production
   # See your keys here: https://dashboard.stripe.com/account/apikeys
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   refund = Stripe::Refund.create({
     charge: '{CHARGE_ID}',
@@ -137,7 +148,7 @@ end
 def stripe_refunding_with_fees
   # Set your secret key: remember to change this to your live secret key in production
   # See your keys here: https://dashboard.stripe.com/account/apikeys
-  Stripe.api_key = 'sk_test_T4mlPA2wTl2yT7QRVDwRM8h600FxIxmJYq'
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
 
   refund = Stripe::Refund.create({
     charge: '{CHARGE_ID}',

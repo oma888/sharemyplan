@@ -1,4 +1,8 @@
 
+
+
+
+
 <div class="container payment-container mt-4">
 <h4 class="py-3" style="text-align: center;">Récapitulatif de ta souscription</h4>
   <div class=" d-flex pb-3 justify-content-around">
@@ -7,27 +11,13 @@
       </div>
 
       <div class="right-payment px-3 py-3">
+        h1>Souscrire à un abonnement mensuel</h1>
+        <p>Abonner vous afin de recharger votre compte automatiquement tous les mois</p>
+        <p><i class="fas fa-cube"></i> <b>Service :</b> <%= @cotisation.subscription.service.name %></p>
+        <p><i class="fas fa-user-check"></i> <b>Shareur :</b> <%= @cotisation.user.first_name %></p>
+        <p><i class="fas fa-euro-sign"></i> <b>Tarif mensuel :</b> <strong><%= (@cotisation.price_cents / 100.0).round(2) %> €</strong></p>
 
-      <div class="right-payment px-3 py-3">
-
-        <p>
-          <i class="fas fa-cube"></i> <b>Service :</b> <%= @cotisation.subscription.service.name %>
-        </p>
-        <p>
-          <i class="fas fa-user-check"></i> <b>Shareur :</b> <%= @cotisation.user.first_name %>
-        </p>
-
-        <p> <b>mail :</b> <%= @cotisation.user.email %></p>
-
-        <p> <b>Premium :</b> <%= @cotisation.user.premium_until %></p>
-
-        <p> <b>Stripe :</b> <%= @cotisation.user.stripe_token %></p>
-
-        <p>
-          <i class="fas fa-euro-sign"></i> <b>Tarif mensuel :</b> <strong><%= (@cotisation.price_cents / 100.0).round(2) %> €</strong>
-        </p>
-
-        <button id="pay" class="btn btn-hp mr-2">T'abonner</button>
+       <button id="pay" class="btn btn-hp mr-2">T'abonner</button>
 
         <script src="https://js.stripe.com/v3/"></script>
         <script>
@@ -39,51 +29,11 @@
             });
          </script>
 
-
-
         <%= link_to cotisation_path(@cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment abandonner votre achat ?"}, class: "btn btn-hp mr-2" do %>
         Annuler
         <% end %>
-
-  <% if @cotisation.subscription.cotisations.size > 0 %>
-  <div class="d-flex justify-content-center" style="border-top: 1px solid grey;">
-      <div class="cotisation-card-footer mt-4">
-      <p style="font-size: 1.2em; font-style: italic; color: grey;" class="mb-4">En finalisant ta souscription, ce share sera composé de :</p>
-
-      <div class="card-co-abo d-flex align-items-center justify-content-around mx-4">
-
-            <div>
-              <div style="text-align: center;">
-              <% if @cotisation.subscription.user.photo? %>
-                  <%= cl_image_tag @cotisation.subscription.user.photo, class: "avatar" %>
-                <% else %>
-                  <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
-                <% end %>
-              </div>
-              <i><%= @cotisation.subscription.user.first_name %></i>
-            </div>
-
-            <div class="co-abos-card d-flex" style="text-align: center;">
-              <% @cotisation.subscription.cotisations.each do |cotisation| %>
-                <div class="mx-3" style="text-align: center;">
-                  <% if cotisation.user.photo? %>
-                    <img class="avatar" src="<%= cotisation.user.photo %>" >
-                  <% else %>
-                    <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
-                  <% end %>
-                <br>
-                <i><%= cotisation.user.first_name %></i>
-              </div>
-              <% end %>
-            </div>
         </div>
       </div>
-
-    <% end %>
-    </div>
-  </div>
-
-
   </div>
 </div>
 

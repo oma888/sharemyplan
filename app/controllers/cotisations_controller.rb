@@ -46,7 +46,7 @@ class CotisationsController < ApplicationController
       # essai 1 abo #
       init_abo
       #############
-
+      init_payment
       cagnotte_update
 
       @notification = Notification.create!(user: @subscription.user)
@@ -77,7 +77,8 @@ class CotisationsController < ApplicationController
       line_items: [{
         name: @cotisation.subscription.name,
         # aucune image ne s'affiche dans cet écran, à relgler !!!!!!!!!!!!!!
-        images: ['/assets/#{@cotisation.subscription.service.photo}'],
+        # images: ['/assets/#{@cotisation.subscription.service.photo}'],
+        # images: '/assets/#{@cotisation.subscription.service.photo}',
         # # images: ['#{@cotisation.subscription.service.photo}'],
         # images: [image_url '#{@cotisation.subscription.service.photo}'],
         # # images: [cl_image_tag(@cotisation.subscription.service.photo)],
@@ -86,7 +87,8 @@ class CotisationsController < ApplicationController
         quantity: 1
       }],
       success_url: cotisation_url(@cotisation),
-      cancel_url: cotisation_url(@cotisation)
+      cancel_url: cotisation_url(@cotisation),
+      customer_email: @cotisation.user.email
     )
     @cotisation.update(checkout_session_id: session.id)
   end
@@ -102,16 +104,14 @@ class CotisationsController < ApplicationController
     @amount = @cotisation.price_cents
 
     begin
-      # plante ici
+      Stripe::Subscription.create({ customer: customer.id,
+                                    items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]})
 
-      Stripe::Subscription.create( {
-        customer: customer.id,
-        items: [ { plan: 'plan_GIDRIFO3ktBxOk' }],
-        })
-
+      # Stripe::Subscription.create(customer: customer.id, items: [{ plan: Rails.application.secrets.stripe[:premium_plan_id] }])
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: ENV['STRIPE_SECRET_KEY'] }])
     rescue Stripe::CardError => e
       flash[:error] = e.message
+
       redirect_to new_cotisation_payment_path(@cotisation)
     end
   end
@@ -122,6 +122,7 @@ class CotisationsController < ApplicationController
 
     if customer.nil?
       customer = Stripe::Customer.create({
+          name: user.name,
           email: user.email,
           payment_method:  'card',
           invoice_settings: { default_payment_method: 'card', },
@@ -167,20 +168,10 @@ class CotisationsController < ApplicationController
 
   def init_abo3
     Stripe.api_key = 'STRIPE_API_KEY'
-
     customer = Stripe::Customer.retrieve('cus_GIEoFsPVo4Njr7')
-
-
-
-
     customer = create_or_retrieve_customer(@cotisation.user)
-
-
-
-
     # Amount in cents
     @amount = @cotisation.price_cents
-
     begin
       # plante ici
       Stripe::Subscription.create(customer: customer.id, items: [{ plan: ENV['STRIPE_SECRET_KEY'] }])
@@ -189,12 +180,6 @@ class CotisationsController < ApplicationController
       redirect_to new_cotisation_payment_path(@cotisation)
     end
   end
-
-
-
-
-
-
 
   private
 
