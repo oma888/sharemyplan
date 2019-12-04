@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_132706) do
+ActiveRecord::Schema.define(version: 2019_12_04_085745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_132706) do
     t.integer "price_cents", default: 0, null: false
     t.string "state"
     t.string "checkout_session_id"
+    t.string "stripe_subs_token"
     t.index ["subscription_id"], name: "index_cotisations_on_subscription_id"
     t.index ["user_id"], name: "index_cotisations_on_user_id"
   end

@@ -16,6 +16,14 @@ def get_random_service(service_array) (service_array)
   service_array[rand(1..nb_service-1).round]
 end
 
+def stripe_subs_init(customer_stripe_id)
+  stripe_subs_token = Stripe::Subscription.create({ customer: customer_stripe_id,
+                                items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]})
+  stripe_subs_token.id
+end
+
+
+
 
 puts "begining of seed"
 puts "Deleting Review"
@@ -204,6 +212,12 @@ puts "Creating cotisations"
 
 user_array = User.all
 
+puts "Setting or loading stripe token for each user"
+user_array.each do | user |
+  user.create_or_retrieve_customer
+end
+puts "finished"
+
 Cotisation.create!(start_date: Date.today, user: User.first, subscription: subscription_patrick)
 Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: subscription_patrick)
 Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: subscription_patrick)
@@ -211,10 +225,15 @@ Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), su
 Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
 Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
 
-puts "end"
+puts "finished"
 
+puts "Getting stripe_subscription_id for each cotisation"
 
+cotisations = Cotisation.all
+cotisations.each do | cotisation |
+  cotisation.stripe_subs_token = stripe_subs_init(cotisation.subscription.user.stripe_token)
+  cotisation.save
+end
+puts "finished"
 
-
-
-
+puts "End of Seed"

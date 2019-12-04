@@ -62,6 +62,13 @@ def stripe_subscription_creation
     })
 end
 
+def stripe_subscription_delete
+  Stripe.api_key = 'STRIPE_SECRET_KEY'
+  Stripe::Subscription.delete('sub_49ty4767H20z6a')
+end
+
+
+
 def stripe_invoice_creation
   Stripe.api_key = 'STRIPE_SECRET_KEY'
 

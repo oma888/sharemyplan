@@ -11,7 +11,18 @@ class CotisationsController < ApplicationController
     @subscription = @cotisation.subscription
     @subscription.available_places += 1
     @subscription.save
-    @cotisation.destroy
+
+    if @cotisation.stripe_subs_token.nil?
+
+    else
+      Stripe::Subscription.delete(@cotisation.stripe_subs_token)
+    end
+
+     # pour le dev, supprimer le compte chez stripe du loueur d abo mais aussi toutes ses souscriptions
+     # Stripe::Customer.delete(@cotisation.user.stripe_token)
+     # supprimer plutot dans le dashboard du site stripe
+
+     @cotisation.destroy
     redirect_to dashboard_path
   end
 
@@ -44,11 +55,11 @@ class CotisationsController < ApplicationController
 
       ###########
       # essai 1 abo #
-      init_abo
+      @cotisation.stripe_subs_token = init_abo
       #############
-      init_payment
-      cagnotte_update
+      stripe_session = init_session
 
+      cagnotte_update
       @notification = Notification.create!(user: @subscription.user)
       notification
 
@@ -69,34 +80,42 @@ class CotisationsController < ApplicationController
     @subscription.user.save
   end
 
-  def init_payment
+  def init_session
     # n est pas appelee en ce moment mais fonctionne
     # fait partie du paiement standard vers stripe (pas de l abonnement !)
+
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: [{
         name: @cotisation.subscription.name,
-        # aucune image ne s'affiche dans cet écran, à relgler !!!!!!!!!!!!!!
+        # aucune image ne s'affiche dans cet ecran, à régler !!!!!!!!!!!!!!
         # images: ['/assets/#{@cotisation.subscription.service.photo}'],
-        # images: '/assets/#{@cotisation.subscription.service.photo}',
-        # # images: ['#{@cotisation.subscription.service.photo}'],
+        # images: ['#{@cotisation.subscription.service.photo}'],
         # images: [image_url '#{@cotisation.subscription.service.photo}'],
-        # # images: [cl_image_tag(@cotisation.subscription.service.photo)],
+        # images: [cl_image_tag(@cotisation.subscription.service.photo)],
         amount: @cotisation.price_cents,
         currency: 'eur',
         quantity: 1
       }],
       success_url: cotisation_url(@cotisation),
       cancel_url: cotisation_url(@cotisation),
+      # billing_address_collection: { zipcode: '59800', city: 'Lille' },
+      # customer_name: @subscription.user.last_name,
+      # mode: 'subscription',
+      # subscription_data:  subscription_data.items.plan
+      # customer: @customer.id, # remarque soit on spécifie l customer.id, soit l'email
       customer_email: @cotisation.user.email
     )
     @cotisation.update(checkout_session_id: session.id)
+
+    return session
   end
 
   ################### fin du code paiement classique
 
   #####################
   # suite essai 1  du appele dans create
+
   def init_abo
     customer = create_or_retrieve_customer(@cotisation.user)
 
@@ -104,16 +123,17 @@ class CotisationsController < ApplicationController
     @amount = @cotisation.price_cents
 
     begin
-      Stripe::Subscription.create({ customer: customer.id,
+      stripe_subs_token = Stripe::Subscription.create({ customer: customer.id,
                                     items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]})
 
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: Rails.application.secrets.stripe[:premium_plan_id] }])
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: ENV['STRIPE_SECRET_KEY'] }])
     rescue Stripe::CardError => e
       flash[:error] = e.message
-
+      raise
       redirect_to new_cotisation_payment_path(@cotisation)
     end
+    stripe_subs_token.id
   end
 
   def create_or_retrieve_customer(user)
@@ -122,10 +142,10 @@ class CotisationsController < ApplicationController
 
     if customer.nil?
       customer = Stripe::Customer.create({
-          name: user.name,
-          email: user.email,
-          payment_method:  'card',
-          invoice_settings: { default_payment_method: 'card', },
+          name: user.first_name + ' ' + user.first_name,
+          email: user.email
+          # payment_method:  ['card'],
+          # invoice_settings: { default_payment_method: 'card', },
           })
 
       user.update! stripe_token: customer.id
@@ -140,55 +160,15 @@ class CotisationsController < ApplicationController
 
     begin
       customer = Stripe::Customer.retrieve user.stripe_token
-      return customer
     rescue Stripe::InvalidRequestError
       # if stripe token is invalid, remove it!
       user.update! stripe_token: nil
       return nil
     end
-  end
-  ### fin essai 1
-
-  # essai 2
-  def init_stripe_session(user, stripe_subscription_params, plan_id)
-
-    begin
-      #Always store your API key in environment variables
-      Stripe.api_key = ENV['STRIPE_API_KEY']
-
-      customer = Stripe::Customer.create(subscription_params)
-      stripe_subscription = customer.subscriptions.create( { plan: plan_id })
-
-      ServiceResponse.new(stripe_subscription)
-
-    rescue Exception => e
-      ServiceResponse.new(nil, false, 'Something went wrong!')
-    end
-  end
-
-  def init_abo3
-    Stripe.api_key = 'STRIPE_API_KEY'
-    customer = Stripe::Customer.retrieve('cus_GIEoFsPVo4Njr7')
-    customer = create_or_retrieve_customer(@cotisation.user)
-    # Amount in cents
-    @amount = @cotisation.price_cents
-    begin
-      # plante ici
-      Stripe::Subscription.create(customer: customer.id, items: [{ plan: ENV['STRIPE_SECRET_KEY'] }])
-    rescue Stripe::CardError => e
-      flash[:error] = e.message
-      redirect_to new_cotisation_payment_path(@cotisation)
-    end
+    customer
   end
 
   private
-
-  def stripe_subscription_params
-    params[:source] = params[:stripeToken]
-    params[:email] = params[:stripeEmail]
-
-    # params.permit(:source, :email)
-  end
 
   def params_cotisation
     params.require(:cotisation).permit(:start_date)

@@ -19,4 +19,34 @@ class User < ApplicationRecord
     end
     # self.premium_until += 1.month
   end
+
+  def create_or_retrieve_customer
+    # Try to retreive Stripe customer and create if not already registered
+    customer = self.retrieve_stripe_customer
+
+    if customer.nil?
+      customer = Stripe::Customer.create({
+          name: self.first_name + ' ' + self.first_name,
+          email: self.email
+          # payment_method:  ['card'],
+          # invoice_settings: { default_payment_method: 'card', },
+          })
+
+      self.update! stripe_token: customer.id
+    end
+    customer
+  end
+
+  def retrieve_stripe_customer
+    return nil if self.stripe_token.nil?
+
+    begin
+      stripe_customer = Stripe::Customer.retrieve user.stripe_token
+    rescue Stripe::InvalidRequestError
+      # if stripe token is invalid, remove it!
+      self.update! stripe_token: nil
+      return nil
+    end
+    stripe_customer
+  end
 end
