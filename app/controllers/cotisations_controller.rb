@@ -12,21 +12,19 @@ class CotisationsController < ApplicationController
   end
 
   def init_payment
+    image_path = ActionController::Base.helpers.asset_url(@cotisation.subscription.service.photo)
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: [{
         name: @cotisation.subscription.name,
-        images: [@cotisation.subscription.service.photo],
-        # images: ['#{@cotisation.subscription.service.photo}'],
-        # images: [image_url(@cotisation.subscription.service.photo)],
-        # images: [cl_image_tag(@cotisation.subscription.service.photo)],
+        images: ["#{request.base_url}#{image_path}"],
         amount: @cotisation.price_cents,
         currency: 'eur',
         quantity: 1
       }],
+      customer_email: @cotisation.user.email,
       success_url: cotisation_url(@cotisation),
-      cancel_url: cotisation_url(@cotisation),
-      customer_email: @cotisation.user.email
+      cancel_url: cotisation_url(@cotisation)
     )
     @cotisation.update(checkout_session_id: session.id)
   end
