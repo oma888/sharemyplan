@@ -11,7 +11,7 @@
 
   <div class="dashboard-shareur py-3 mt-3">
     <div class="shareur-title d-flex justify-content-center pb-2">
-      <h4 id="abonnements">Mes abonnements en tant que Shareur</h4>
+      <h4 id="abonnements" style="color: #4e4e4f">Mes abonnements en tant que Shareur</h4>
     <div>
     </div>
   </div>
@@ -34,7 +34,7 @@
 
   <div class="dashboard-locataire py-3 mt-4">
 
-    <h4>Mes abonnements en tant que co-abonné</h4>
+    <h4 style="color: #4e4e4f">Mes abonnements en tant que co-abonné</h4>
 
     <% if current_user.cotisations.count > 0 %>
       <div class="group-card-sub">
@@ -60,7 +60,7 @@
 
   <div class="info-perso py-3 mt-4">
     <div class="row info-perso-header d-flex align-items-center">
-      <div class="col-11 info-perso-title"><h4 class="pl-4" style="text-align: center; margin-top:10px;">Mes infos persos</h4></div>
+      <div class="col-11 info-perso-title"><h4 class="pl-4" style="text-align: center; margin-top:10px; color: #4e4e4f;">Mes infos persos</h4></div>
       <div class="col-1">
         <%= link_to edit_user_registration_path do %>
           <i class="fas fa-pen px-1"></i>

@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
     @review.cotisation = @cotisation
     authorize @review
     if @review.save
-      redirect_to cotisation_path(@cotisation)
+      redirect_to dashboard_path
     else
       render :new
     end
