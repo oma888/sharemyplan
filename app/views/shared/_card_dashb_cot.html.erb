@@ -1,7 +1,7 @@
 <div class="co-abo-card m-auto">
   <%= image_tag(cotisation.subscription.service.photo, class: "co-abo-card-photo") %>
   <div class="co-abo-price"><%= cotisation.subscription.service.total_price.fdiv(cotisation.subscription.service.number_of_places).round(2) %>€ / mois</div>
-  <div class="commission-service">+0,30 € de frais de service par mois</div>
+  <div class="commission-service">+0,30 € de frais de service par mois </div>
   <button type="button" class="btn btn-lg btn-dasb" data-toggle="modal" data-target="#modal-cotisation">
     Gerer
   </button>

@@ -119,15 +119,15 @@ service_array = Service.all
 netflix_premium = Service.create!(name: 'Netflix Premium',  number_of_places: '4',    total_price: '15.99',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'netflix-premium.png')
 netflix_standard = Service.create!(name: 'Netflix Standard', number_of_places: '2',    total_price: '10.99',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'netflix-standard.png')
 ocs = Service.create!(name: 'OCS',              number_of_places: '4',    total_price: '12',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'ocs.png')
-spotify_family = Service.create!(name: 'Spotify family',   number_of_places: '6',    total_price: '14',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'spotify.png')
+spotify_family = Service.create!(name: 'Spotify family',   number_of_places: '6',    total_price: '14,99',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'spotify.png')
 deezer_premium = Service.create!(name: 'Deezer Premium',   number_of_places: '6',    total_price: '14.99',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'deezer.png')
-apple_tv_premium = Service.create!(name: 'Apple TV Premium', number_of_places: '4',    total_price: '12',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'appletv.png')
-amazon_prime_video = Service.create!(name: 'Amazon Prime Video',     number_of_places: '6',    total_price: '15',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'amazon-prime-video.png')
+apple_tv_premium = Service.create!(name: 'Apple TV Premium', number_of_places: '4',    total_price: '6,99',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'appletv.png')
+amazon_prime_video = Service.create!(name: 'Amazon Prime Video',     number_of_places: '2',    total_price: '4.09',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'amazon-prime-video.png')
 youtube_premium = Service.create!(name: 'Youtube Premium',  number_of_places: '6',    total_price: '18',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'youtube.png')
 canal_series = Service.create!(name: 'Canal+ Serie',     number_of_places: '2',    total_price: '10',    category: 'vosd',        description: 'Service de VOD en ligne',                      photo: 'canal.png')
 apple_music = Service.create!(name: 'Apple music',      number_of_places: '6',    total_price: '15',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'apple.png')
-amazon_music = Service.create!(name: 'Amazon Music',     number_of_places: '6',    total_price: '15',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'amazon-music.png')
-amazon_prime = Service.create!(name: 'Amazon Prime',     number_of_places: '2',    total_price: '4',     category: 'ecommerce',  description: 'Livraison express et gratuite',                 photo: 'amazon-prime.png')
+amazon_music = Service.create!(name: 'Amazon Music',     number_of_places: '6',    total_price: '4,09',    category: 'musique',     description: 'Des millions de titres à ecouter',              photo: 'amazon-music.png')
+amazon_prime = Service.create!(name: 'Amazon Prime',     number_of_places: '2',    total_price: '4,09',     category: 'ecommerce',  description: 'Livraison express et gratuite',                 photo: 'amazon-prime.png')
 cdiscount = Service.create!(name: 'Cdiscount',        number_of_places: '2',    total_price: '2.50',  category: 'ecommerce',  description: 'Livraison express et gratuite',                 photo: 'cdiscount.png')
 pack_office = Service.create!(name: 'Pack Office',      number_of_places: '6',    total_price: '8,25',  category: 'logiciel',    description: 'Pack office complet ',                          photo: 'office-365.png')
 norton_premium = Service.create!(name: 'Norton Premium',   number_of_places: '10',   total_price: '8,5',   category: 'logiciel',    description: 'Service VPN',                                   photo: 'norton.png')
@@ -151,6 +151,7 @@ le_figaro = Service.create!(name: 'Le Figaro',        number_of_places: '5',    
 liberation = Service.create!(name: 'Liberation',       number_of_places: '2',    total_price: '8',     category: 'presse',      description: 'Le journal en version numérique',               photo: 'liberation.png')
 express = Service.create!(name: 'L Express',        number_of_places: '2',    total_price: '8',     category: 'presse',      description: 'Le journal en version numérique',               photo: 'lexpress.png')
 izneo = Service.create!(name: 'Izneo',            number_of_places: '6',    total_price: '13',    category: 'presse',      description: 'Lisez comme vous le voulez ',                   photo: 'izneo.png')
+xhamster = Service.create!(name: 'Xhamster',            number_of_places: '2',    total_price: '49',    category: 'presse',      description: 'Regardez ce que vous voulez ',                   photo: 'xhamster.png')
 puts "finished"
 
 
@@ -159,6 +160,10 @@ puts "finished"
 puts "Creating subscriptions"
 
 user_array = User.all
+
+#xhamster
+remi_xhamster_sub = Subscription.create!(available_places: '2', identifiant: 'remicelib', password: 'azerty', user: remi, service: xhamster)
+
 
 #OCS
 john_ocs_sub = Subscription.create!(available_places: '3', identifiant: 'johnlebg', password: 'azerty', user: john, service: ocs)

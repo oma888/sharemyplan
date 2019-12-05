@@ -1,10 +1,18 @@
 <div class="container">
 <!-- les lignes ci-dessous permettent de gérer l'affichage dynamique du titre -->
   <% if @subscriptions.size > 0 && @subscriptions.size - @full_subscriptions.size > 0 %>
-      <h2 class="index-sub-title">
-        <%= current_user.first_name.capitalize %>, voici les partages
-        <%= @service.name %> disponibles
-      </h2>
+      <div class="d-flex align-items-center mt-4">
+        <div class="back d-flex align-items-center" style="width: 7%; height: 40px; color: white;">
+          <a href="/services?user_choice=cotisations"><i class="fas fa-long-arrow-alt-left ml-4" style="color: white;"></i></a>
+        </div>
+        <div class="title-sub d-flex justify-content-center" style="width: 93%; text-align: center; font-family: 'Pacifico'; color: white; font-size: 2.1em; margin-right: 40px;">
+          <% if @subscriptions.size - @full_subscriptions.size > 1 %>
+            <%= current_user.first_name.capitalize %>, voici les <%= @subscriptions.size - @full_subscriptions.size %> partages <%= @service.name %> disponibles
+          <% else %>
+            <%= current_user.first_name.capitalize %>, il y a un partage <%= @service.name %> disponible
+          <% end %>
+        </div>
+      </div>
   <% else %>
   <div class="container" style="text-align: center;">
     <h2 class="index-sub-title">Il n'y aucun partage <%= @service.name %> disponible</h2>

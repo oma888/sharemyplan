@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="show-middle-sub mt-1">
+    <div class="show-middle-sub mt-2">
       <% if subscription.reviews.any? %>
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="4000">
           <div class="carousel-inner">
@@ -26,16 +26,17 @@
                 <% if review.cotisation.user.photo?  %>
                   <div class="review_display">
                     <div class="content_review">
-                     <img class="avatar" src="<%= review.cotisation.user.photo %>"/>
+                     <img class="avatar" src="<%= review.cotisation.user.photo %>"/> <br>
+                     <span style="color: grey;"> <%= review.cotisation.user.first_name %></span>
                       <%= render "shared/stars", note: review.rating %>
-                      <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>                    </div>
+                      <p style="color: #C1666B;"><i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i></p>               </div>
                   </div>
                 <% else %>
                   <div class="review_display">
                     <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png">
                     <div class="content_review">
                         <%= render "shared/stars", note: review.rating %>
-                       <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>
+                       <p style="color: #C1666B;"><i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i></p>
                     </div>
                   </div>
                 <% end  %>
@@ -49,7 +50,7 @@
             <h4>Avis</h4>
           </div>
           <div class="mx-5 my-2" >
-            <p><i style="font-weight: normal;">Aucun avis pour le moment...</i></p>
+            <p><i style="font-weight: normal; color: grey;">Aucun avis pour le moment...</i></p>
           </div>
         </div>
       <% end %>

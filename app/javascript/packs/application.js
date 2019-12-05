@@ -8,9 +8,14 @@ import { createNotification } from "./plugins/notification";
 
 import { ecritureHome } from "./plugins/bannerHome";
 
+
 import { initSweetalert } from './plugins/init_sweetalert';
 
 // import { someDelete } from './plugins/sweetalert2';
+
+import { openModal } from './plugins/openModal';
+import { dynamicRating } from './plugins/starsRating';
+
 
 
 categoryClicker();
@@ -19,7 +24,8 @@ someChange();
 // stickyNavigation();
 createNotification();
 ecritureHome();
-// someDelete();
+
+
 
 
 initSweetalert('#button-cotisation-cancel', {
@@ -83,4 +89,8 @@ initSweetalert('#fire-co-abonne', {
       link.click();
     }
    });
+
+openModal();
+dynamicRating();
+
 
