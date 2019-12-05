@@ -50,7 +50,7 @@ initSweetalert('#share-quit', {
   text: "Précisez votre choix",
   icon: "warning",
   buttons: {
-    cancel: "Continuer de partager ",
+    cancel: "Rester dans le share ",
     confirm: { text: "Confirmer l'abandon", value: true },
     },
   }, (value) => {
@@ -80,8 +80,8 @@ initSweetalert('#fire-co-abonne', {
   text: "Précisez votre choix",
   icon: "warning",
   buttons: {
-    cancel: "Conserver cet utilisateur ",
-    confirm: { text: "Confirmer son exclusion", value: true },
+    cancel: "Non, le garder",
+    confirm: { text: "Oui, l'exclure", value: true },
     },
   }, (value) => {
     if (value) {
