@@ -90,6 +90,21 @@ initSweetalert('#fire-co-abonne', {
     }
    });
 
+
+
+
+initSweetalert('#review-new-submit', {
+  title: "Merci d'avoir laissé un avis sur notre site",
+  text: "",
+  icon: "success",
+  buttons: {
+    confirm: { text: "Ok", value: true },
+    },
+  }, (value) => {
+      const link = document.getElementById('review-new-submit-link');
+      link.click();
+   });
+
 openModal();
 dynamicRating();
 

@@ -8,8 +8,8 @@ class ReviewsController < ApplicationController
   # end
 
   def new
-    @cotisation = Cotisation.find(params[:cotisation_id])
-    @review = Review.new
+    @cotisation        = Cotisation.find(params[:cotisation_id])
+    @review            = Review.new
     @review.cotisation = @cotisation
     authorize @review
   end
