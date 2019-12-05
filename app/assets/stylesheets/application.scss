@@ -1,3 +1,4 @@
+
 // Graphical variables
 @import "config/fonts";
 @import "config/colors";
@@ -12,6 +13,8 @@
 @import "components/index";
 @import "pages/index";
 
+
+
 .full-screen {
   // min-height: 85vh;
   // Coded by Alex 100vh moins la taille de la navbar et du footer
@@ -20,7 +23,6 @@
   // margin-top: 150px;
 
 }
-
 
 h1, h2, h3, h5, h6 {
   font-family: 'Pacifico', cursive, 'Open-sans';

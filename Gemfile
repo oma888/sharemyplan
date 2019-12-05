@@ -23,6 +23,7 @@ gem 'pundit'
 gem 'money-rails'
 gem 'stripe'
 gem 'stripe_event'
+gem 'sweetalert2'
 
 group :development do
   gem 'web-console', '>= 3.3.0'

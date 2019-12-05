@@ -207,6 +207,8 @@ GEM
     stripe_event (2.3.0)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 6)
+    sweetalert2 (7.25.6)
+      railties (>= 3.1.0)
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -260,6 +262,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   stripe
   stripe_event
+  sweetalert2
   uglifier
   web-console (>= 3.3.0)
   webpacker

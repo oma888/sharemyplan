@@ -30,7 +30,10 @@
           <a class="btn btn-abus" href="mailto:contact@sharemyplan.site %>">Signaler un abus</a>
         </div>
         <div class="buton-rigth mr-2">
-          <%= link_to 'Me retirer de ce share', cotisation_path(@cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment vous retirer de cette abonnement ?" }, class: 'btn btn-destroy' %> <br> <br>
+
+          <%= link_to "Me retirer de ce share", "", id: "button-share-cancel", class: "btn btn-destroy"  %>
+          <%= link_to "", cotisation_path(@cotisation), method: :delete, id: "cancel-share-link", class: "hidden" %>
+
           <%= link_to 'Laisser un avis', new_cotisation_review_path(@cotisation), class: 'btn btn-avis' %>
 
         </div>
