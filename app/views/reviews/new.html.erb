@@ -1,39 +1,41 @@
-<div class="container d-flex justify-content-around align-items-center mt-4">
-  <div>
-    <div class="card-new-review text-center mx-3" style="height: 430px; box-shadow: 0 2px 14px rgba(126,87,88,.1), 0 3px 6px rgba(0,0,0,.08);">
-      <div class="col-12 col-sm-offset-4 px-4">
-        <h4>Details de l'abonnement de <%= @cotisation.subscription.user.first_name %></h4><br>
-          <div class="cotisation-logo d-flex align-items-center justify-content-center" style="height: 150px;">
-             <%= image_tag(@cotisation.subscription.service.photo, height: '100', width: '200')%>
-          </div>
-          <p>
-            <i class="fas fa-user"></i> <b>Ton shareur : </b><%= @cotisation.subscription.user.first_name %>
-          </p>
-          <p>
-            <i class="fas fa-tv"></i> <b>Service : </b><%= @cotisation.subscription.service.name %>
-          </p>
-          <p>
-            <i class="far fa-clock"></i> <b>Abonné depuis le : </b><%= @cotisation.start_date %>
-          </p>
+<div class="container d-flex justify-content-around mt-4">
+  <div class="d-flex align-items-center">
+    <div style="height: 600px;">
+      <div class="card-new-review text-center mx-3" style="height: 430px; box-shadow: 0 2px 14px rgba(126,87,88,.1), 0 3px 6px rgba(0,0,0,.08);">
+        <div class="col-12 col-sm-offset-4 px-4">
+          <h4>Details de l'abonnement de <%= @cotisation.subscription.user.first_name %></h4>
+            <div class="cotisation-logo d-flex align-items-center justify-content-center" style="height: 150px;">
+               <%= image_tag(@cotisation.subscription.service.photo, height: '100', width: '200')%>
+            </div>
+            <p>
+              <i class="fas fa-user"></i> <b>Ton shareur : </b><%= @cotisation.subscription.user.first_name %>
+            </p>
+            <p>
+              <i class="fas fa-tv"></i> <b>Service : </b><%= @cotisation.subscription.service.name %>
+            </p>
+            <p>
+              <i class="far fa-clock"></i> <b>Abonné depuis le : </b><%= @cotisation.start_date %>
+            </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div>
-    <div class="card-new-review text-center mx-3"style="height: 430px; box-shadow: 0 2px 14px rgba(126,87,88,.1), 0 3px 6px rgba(0,0,0,.08);">
-      <div class="col-12 col-sm-offset-4 px-4" id="review-form">
-        <h4>Votre avis sur l'abonnement de <%= @cotisation.subscription.user.first_name %></h4><br>
-        <%= simple_form_for [@cotisation, @review] do |f| %>
-          <%= f.input :content, label: 'Votre avis détaillé :'%>
-          <%= f.input :rating, as: :hidden %> <br>
-          Note pour <%= @cotisation.subscription.user.first_name %> :
-           <div class="stars-rating-new">
-            <% 5.times do |index| %>
-              <i id="<%= index + 1 %>"  class="review-rating far fa-star"></i>
-            <% end %>
-          </div>
-          <%= f.submit "Soumettre", class: "text-center btn btn-hp"  %>
-        <% end %>
+    <div style="height: 600px;">
+      <div class="card-new-review text-center mx-3"style="height: 430px; box-shadow: 0 2px 14px rgba(126,87,88,.1), 0 3px 6px rgba(0,0,0,.08);">
+        <div class="col-12 col-sm-offset-4 px-4" id="review-form">
+          <h4>Ton avis sur l'abonnement de <%= @cotisation.subscription.user.first_name %></h4><br>
+          <%= simple_form_for [@cotisation, @review] do |f| %>
+            <%= f.input :content, label: 'Ton avis détaillé :'%>
+            <%= f.input :rating, as: :hidden %>
+            Ta note :
+             <div class="stars-rating-new">
+              <% 5.times do |index| %>
+                <i id="<%= index + 1 %>"  class="review-rating far fa-star mb-4"></i>
+              <% end %>
+            </div>
+            <%= f.submit "Soumettre", class: "text-center btn btn-hp"  %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
