@@ -18,9 +18,9 @@
       <div class="cotisation-infos py-3 pl-3">
         <div>
           <p><i class="fas fa-user"></i> <b>Ton shareur</b> : <%= @cotisation.subscription.user.first_name %></p>
-          <p><i class="fas fa-tv"></i> <b>Abo :</b><%= @cotisation.subscription.service.name %></p>
+          <p><i class="fas fa-tv"></i> <b>Abo : </b><%= @cotisation.subscription.service.name %></p>
           <p><i class="fas fa-at"></i> <b>Identifiant : </b> <%= @cotisation.subscription.identifiant %></p>
-          <p><i class="fas fa-fingerprint"></i> <b>Mot de passe :</b> <%= @cotisation.subscription.password %></p>
+          <p><i class="fas fa-fingerprint"></i> <b>Mot de passe : </b> <%= @cotisation.subscription.password %></p>
           <p><i class="fas fa-money-bill-wave"></i></i> <b>Statut du paiement : </b> à jour</p>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="buton-rigth mr-2">
 
           <%= link_to "Me retirer de ce share", "", id: "button-share-cancel", class: "btn btn-destroy"  %>
-          <%= link_to "", cotisation_path(@cotisation), method: :delete, id: "cancel-share-link", class: "hidden" %>
+          <%= link_to "", cotisation_path(@cotisation), method: :delete, id: "cancel-share-link", class: "hidden" %> <br> <br>
 
           <%= link_to 'Laisser un avis', new_cotisation_review_path(@cotisation), class: 'btn btn-avis' %>
 
