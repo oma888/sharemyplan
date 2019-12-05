@@ -103,9 +103,9 @@
                   <% end %>
                   <%= cotisation.user.first_name %>
 
-                  <%= link_to cotisation_delete_by_owners_path(cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment supprimer cette utilisateur de votre abonnement?" } do %>
-                    <i class="far fa-trash-alt"></i>
-                  <% end %>
+                  <i id="fire-co-abonne" style="color: #4382a4; cursor: pointer" class="far fa-trash-alt"></i>
+                  <%= link_to "", cotisation_delete_by_owners_path(cotisation), method: :delete, id: "fire-co-abonne-link", class: "hidden"  %>
+
                   <br>
                 </div>
 
@@ -117,7 +117,15 @@
       </div>
 
       <div class="card-delete-abo align-items-center justify-content-around mx-4" style="margin: auto; text-align: center; max-width: 30%; min-width: 30%;">
-        <%= link_to "Supprimer l'abonnement", subscription_path(subscription), method: :delete, data: { confirm: "Souhaitez-vous vraiment supprimer cette abonnement ?" }, class: 'btn btn-destroy' %> <br> <br>
+
+        <%= link_to "Supprimer l'abonnement", "", id: "subscription-stop", class: "btn btn-destroy"  %>
+        <%= link_to "", subscription_path(subscription), method: :delete, id: "subscription-stop-link", class: "hidden" %>
+
+         <br>
+         <br>
+
+
+
       </div>
     </div>
   </div>
