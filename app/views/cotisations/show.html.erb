@@ -4,7 +4,7 @@
 
     <div class="cotisation-card-header pt-2 d-flex justify-content-center align-items-center mt-3">
       <div class="cotisation-title py-2" style="width: 95%; text-align: center;">
-        <h3>Détail de ton abonnement <%= @cotisation.subscription.name %> (co-abonné)</h3>
+        <h3>Merci <%= @cotisation.user.first_name %>, voici les détails de ton nouvel abo <%= @cotisation.subscription.name %></h3>
       </div>
       <div class="back ml-2 py-2" style="width: 5%; text-align: center;">
         <a href="/dashboard"><i class="far fa-times-circle" style="color: white; font-size: 1.4em;"></i></a>
@@ -39,16 +39,16 @@
     </div>
 
     <div class="cotisation-card-footer mt-4">
-      <h4 class="mb-4">Tes co-abonnés</h4>
+      <h5 class="mb-4" style="text-align: center; color: #515151;">Tes co-abonnés</h5>
 
-      <div class="card-co-abo d-flex align-items-center justify-content-around mx-4">
+      <div class="card-co-abo d-flex align-items-center justify-content-around mx-4 pt-2">
 
           <% @cotisation.subscription.cotisations.each do |cotisation| %>
             <div class="co-abos-card mb-3" style="text-align: center;">
               <% if cotisation.user.photo? %>
-                <img class="avatar" src="<%= cotisation.user.photo %>" >
+                <img class="avatar-show" src="<%= cotisation.user.photo %>" >
               <% else %>
-                <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
+                <img class="avatar-show" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
               <% end %>
               <br>
               <i><%= cotisation.user.first_name %></i>

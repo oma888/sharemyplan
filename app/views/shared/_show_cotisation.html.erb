@@ -1,4 +1,5 @@
 <div class="modal fade" id="modal-cotisation" tabindex="-1" role="dialog" aria-labelledby="<%= cotisation.id %>" aria-hidden="true">
+
   <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 100%;">
     <div class="modal-content" style="background-color: transparent; border: none;">
 
@@ -46,9 +47,9 @@
           <% cotisation.subscription.cotisations.each do |cotisation| %>
             <div class="co-abos-card mb-3" style="text-align: center;">
               <% if cotisation.user.photo? %>
-                <img class="avatar" src="<%= cotisation.user.photo %>" >
+                <img class="avatar-show" src="<%= cotisation.user.photo %>" >
               <% else %>
-                <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
+                <img class="avatar-show" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
               <% end %>
               <br>
               <i><%= cotisation.user.first_name %></i>

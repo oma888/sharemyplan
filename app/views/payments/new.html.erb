@@ -46,24 +46,23 @@
 
       <div class="card-co-abo d-flex align-items-center justify-content-around mx-4">
 
-            <div>
-              <div style="text-align: center;">
-              <% if @cotisation.subscription.user.photo? %>
-                  <%= cl_image_tag @cotisation.subscription.user.photo, class: "avatar" %>
-                <% else %>
-                  <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
-                <% end %>
-              </div>
-              <i><%= @cotisation.subscription.user.first_name %></i>
-            </div>
-
             <div class="co-abos-card d-flex" style="text-align: center;">
-              <% @cotisation.subscription.cotisations.each do |cotisation| %>
-                <div class="mx-3" style="text-align: center;">
-                  <% if cotisation.user.photo? %>
-                    <img class="avatar" src="<%= cotisation.user.photo %>" >
+              <div  style="text-align: center; min-width: 67px;">
+                <div>
+                <% if @cotisation.subscription.user.photo? %>
+                    <%= cl_image_tag @cotisation.subscription.user.photo, class: "avatar-show" %>
                   <% else %>
-                    <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
+                    <img class="avatar-show" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
+                  <% end %>
+                </div>
+                <i><%= @cotisation.subscription.user.first_name %></i>
+              </div>
+              <% @cotisation.subscription.cotisations.each do |cotisation| %>
+                <div class="ml-4" style="text-align: center; min-width: 67px;">
+                  <% if cotisation.user.photo? %>
+                    <img class="avatar-show" src="<%= cotisation.user.photo %>" >
+                  <% else %>
+                    <img class="avatar-show" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
                   <% end %>
                 <br>
                 <i><%= cotisation.user.first_name %></i>

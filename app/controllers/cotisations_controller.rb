@@ -104,7 +104,7 @@ class CotisationsController < ApplicationController
     @subscription.available_places += 1
     @subscription.save
     @cotisation.destroy
-    redirect_to dashboard_path
+    redirect_to dashboard_path(active: @subscription.id)
   end
 
   private

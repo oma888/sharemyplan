@@ -1,7 +1,7 @@
 
-<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="<%= subscription.id %>" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="max-width: 100%;">
-    <div class="modal-content" style="background-color: transparent;">
+<div class="modal fade" id="modal-subscription<%= subscription.id %>" tabindex="-1" role="dialog" aria-labelledby="<%= subscription.id %>" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 100%;">
+    <div class="modal-content" style="background-color: transparent; border: none;">
 
     <div class="cotisation-card" style="margin: 0 auto; width: 85%">
 
@@ -54,16 +54,16 @@
                       <% if review.cotisation.user.photo?  %>
                         <div class="review_display">
                           <div class="content_review">
-                           <img class="avatar" src="<%= review.cotisation.user.photo %>"/>
+                           <img class="avatar-show" src="<%= review.cotisation.user.photo %>"/>
                             <%= render "shared/stars", note: average(subscription)%>
                             <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>                    </div>
                         </div>
                       <% else %>
                         <div class="review_display">
-                          <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png">
+                          <img class="avatar-show" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png">
                           <div class="content_review">
                             <%= render "shared/stars", note: average(subscription)%>
-                             <i> <strong>"</strong> <%=  review.content %> <strong>"</strong> </i>
+                             <p style="color: #C1666B;"><i> "<%= review.content %>" </i></p>
                           </div>
                         </div>
                       <% end  %>
@@ -90,21 +90,21 @@
     <div class="card-co-abo align-items-center justify-content-around mx-4" style="max-width: 65%; min-width: 65%; text-align:center;">
       <h4 class="mb-4">Tes co-abonnés</h4>
         <% if subscription.cotisations.count < 1 %>
-          <p><i>Tu n'as pas de co-abonné(e) pour le moment</i></p>
+          <p><i>Tu n'as pas de co-abonné(e) pour le moment <%= current_user.first_name %></i></p>
         <% else %>
 
           <div class="card-co-abo d-flex align-items-center justify-content-around mx-3">
             <% subscription.cotisations.each do |cotisation| %>
                 <div class="d-flex" style="flex-direction: column;">
                   <% if cotisation.user.photo?  %>
-                    <img class="avatar" src="<%= cotisation.user.photo %>" style="margin: auto;" >
+                    <img class="avatar-show" src="<%= cotisation.user.photo %>" style="margin: auto;" >
                   <% else %>
-                    <img class="avatar" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
+                    <img class="avatar-show" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"/>
                   <% end %>
                   <%= cotisation.user.first_name %>
 
                   <%= link_to cotisation_delete_by_owners_path(cotisation), method: :delete, data: { confirm: "Souhaitez-vous vraiment supprimer cette utilisateur de votre abonnement?" } do %>
-                    <i class="far fa-trash-alt"></i>
+                    <i style="color: #4382a4;" class="far fa-trash-alt"></i>
                   <% end %>
                   <br>
                 </div>
