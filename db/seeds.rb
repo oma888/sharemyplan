@@ -151,6 +151,7 @@ le_figaro = Service.create!(name: 'Le Figaro',        number_of_places: '5',    
 liberation = Service.create!(name: 'Liberation',       number_of_places: '2',    total_price: '8',     category: 'presse',      description: 'Le journal en version numérique',               photo: 'liberation.png')
 express = Service.create!(name: 'L Express',        number_of_places: '2',    total_price: '8',     category: 'presse',      description: 'Le journal en version numérique',               photo: 'lexpress.png')
 izneo = Service.create!(name: 'Izneo',            number_of_places: '6',    total_price: '13',    category: 'presse',      description: 'Lisez comme vous le voulez ',                   photo: 'izneo.png')
+xhamster = Service.create!(name: 'Xhamster',            number_of_places: '2',    total_price: '49',    category: 'presse',      description: 'Regardez ce que vous voulez ',                   photo: 'xhamster.png')
 puts "finished"
 
 
@@ -159,6 +160,10 @@ puts "finished"
 puts "Creating subscriptions"
 
 user_array = User.all
+
+#xhamster
+remi_xhamster_sub = Subscription.create!(available_places: '2', identifiant: 'remicelib', password: 'azerty', user: remi, service: xhamster)
+
 
 #OCS
 john_ocs_sub = Subscription.create!(available_places: '3', identifiant: 'johnlebg', password: 'azerty', user: john, service: ocs)
