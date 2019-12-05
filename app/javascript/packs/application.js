@@ -94,7 +94,7 @@ initSweetalert('#fire-co-abonne', {
 
 
 initSweetalert('#review-new-submit', {
-  title: "Merci d'avoir laissé un avis sur notre site",
+  title: "Merci d'avoir laissé un avis !",
   text: "",
   icon: "success",
   buttons: {
