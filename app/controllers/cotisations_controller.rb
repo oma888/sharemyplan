@@ -12,31 +12,15 @@ class CotisationsController < ApplicationController
     @subscription.available_places += 1
     @subscription.save
 
-    if @cotisation.stripe_subs_token.nil?
+    @cotisation.stripe_subs_token.nil? ? raise : Stripe::Subscription.delete(@cotisation.stripe_subs_token)
 
-    else
-      Stripe::Subscription.delete(@cotisation.stripe_subs_token)
-    end
-
-     # pour le dev, supprimer le compte chez stripe du loueur d abo mais aussi toutes ses souscriptions
-     # Stripe::Customer.delete(@cotisation.user.stripe_token)
-     # supprimer plutot dans le dashboard du site stripe
-
-     @cotisation.destroy
+    @cotisation.destroy
     redirect_to dashboard_path
   end
 
   def new
     @subscription = Subscription.find(params[:subscription_id])
     @cotisation = Cotisation.new
-
-    # essai 1 en place au niveau de l'abonnement des paiement stripe !
-
-    # fait parti de l essai N 2
-    # Stripe.api_key = ENV['STRIPE_API_KEY']
-    # @plan = Stripe::Plan.retrieve(SubscriptionsToolkit::PREMIUM_PLAN_ID)
-    # fin de l essai N 2 de cotisation new
-
     authorize @cotisation
   end
 
@@ -52,12 +36,8 @@ class CotisationsController < ApplicationController
     authorize @cotisation
 
     if @cotisation.save
-
-      ###########
-      # essai 1 abo #
       @cotisation.stripe_subs_token = init_abo
-      #############
-      stripe_session = init_session
+      init_session
 
       cagnotte_update
       @notification = Notification.create!(user: @subscription.user)
@@ -92,9 +72,6 @@ def stripe_checkout_session
   end
 
   def init_session
-    # n est pas appelee en ce moment mais fonctionne
-    # fait partie du paiement standard vers stripe (pas de l abonnement !)
-
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       subscription_data: {
@@ -110,17 +87,10 @@ def stripe_checkout_session
     return session
   end
 
-  ################### fin du code paiement classique
-
-  #####################
-  # suite essai 1  du appele dans create
-
   def init_abo
     customer = create_or_retrieve_customer(@cotisation.user)
-
     # Amount in cents
     @amount = @cotisation.price_cents
-
     begin
       stripe_subs_token = Stripe::Subscription.create(
         {
@@ -128,7 +98,6 @@ def stripe_checkout_session
           items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]
         }
       )
-
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: Rails.application.secrets.stripe[:premium_plan_id] }])
       # Stripe::Subscription.create(customer: customer.id, items: [{ plan: ENV['STRIPE_SECRET_KEY'] }])
     rescue Stripe::CardError => e
@@ -169,6 +138,23 @@ def stripe_checkout_session
       return nil
     end
     customer
+  end
+
+  def cotisation_next_payment(cotisation)
+    next_payment = cotisation.updated_at
+    next_payment += 1.month until next_payment > DateTime.now
+    next_payment
+  end
+
+  def cotisation_last_payment(cotisation)
+    last_payment = cotisation.created_at
+    last_payment += 1.month while last_payment <= DateTime.now
+    last_payment
+  end
+
+
+  def stripe_subscription__item_list(subscription_id)
+    Stripe::SubscriptionItem.list(subscription: subscription_id)
   end
 
   private

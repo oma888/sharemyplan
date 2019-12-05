@@ -17,11 +17,14 @@ def get_random_service(service_array) (service_array)
 end
 
 def stripe_subs_init(customer_stripe_id)
-  stripe_subs_token = Stripe::Subscription.create({ customer: customer_stripe_id,
-                                items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]})
+  stripe_subs_token = Stripe::Subscription.create(
+    {
+      customer: customer_stripe_id,
+      items: [{ plan: 'plan_GIDRIFO3ktBxOk' }]
+    }
+  )
   stripe_subs_token.id
 end
-
 
 
 
@@ -212,10 +215,16 @@ Subscription.create!(available_places: '1', identifiant: 'aline', password: 'aze
 Subscription.create!(available_places: '1', identifiant: 'claudie', password: 'azerty', user: get_random_user(user_array), service: netflix_premium)
 
 puts "finished"
-
-
-
+puts ""
 puts "Creating cotisations"
+Cotisation.create!(start_date: Date.today, user: User.first, subscription: subscription_patrick)
+Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: subscription_patrick)
+Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: subscription_patrick)
+Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
+Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
+Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
+puts "finished"
+puts ""
 
 user_array = User.all
 
@@ -223,24 +232,27 @@ puts "Setting or loading stripe token for each user"
 user_array.each do | user |
   user.create_or_retrieve_customer
 end
-puts "finished"
 
-Cotisation.create!(start_date: Date.today, user: User.first, subscription: subscription_patrick)
-Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: subscription_patrick)
-Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: subscription_patrick)
-Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
-Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
-Cotisation.create!(start_date: Date.today, user: get_random_user(user_array), subscription: Subscription.first)
 
-puts "finished"
-
+puts ""
 puts "Getting stripe_subscription_id for each cotisation"
-
 cotisations = Cotisation.all
 cotisations.each do | cotisation |
   cotisation.stripe_subs_token = stripe_subs_init(cotisation.subscription.user.stripe_token)
+  cotisation.state = "paid"
   cotisation.save
 end
-puts "finished"
 
+puts "finished"
+puts ""
+puts "visual control users stripe token"
+user_array.each do | user |
+  puts user.stripe_token
+end
+puts ""
+puts "visual control cotisations stripe token"
+cotisations.each do | cotisation |
+  puts cotisation.stripe_subs_token
+end
+puts ""
 puts "End of Seed"

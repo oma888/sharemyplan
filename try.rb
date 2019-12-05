@@ -2,6 +2,12 @@ require 'stripe'
 
 # du site stripe:
 
+def stripe_subscription__item_list(subscription_id)
+    Stripe::SubscriptionItem.list({
+    subscription: subscription_id,
+  })
+end
+
 def stripe_product_create
   Stripe.api_key = 'STRIPE_SECRET_KEY'
 
