@@ -20,12 +20,8 @@
             <a href="/dashboard#abonnements"> <span class="dropdown-item notifications"><%= flash[:notifications] %></span></a>
           </div>
         </li>
-
-
         <li class="nav-item dropdown mr-2">
-
-          <span class="nav-link navbar-wagon-link pr-1" style="color:#5f6060;"><b> <a href="/dashboard#anchor" style="text-decoration: none;" > Ma cagnotte</a> <span style="font-size: 1.2em;"></span> <i class="fas fa-euro-sign pr-1"></i><%= current_user.cagnotte.to_f.round(2) %></b></span>
-
+          <span class="nav-link navbar-wagon-link pr-1" style="color:#5f6060;"><b> <a href="/dashboard#anchor" style="text-decoration: none;" > Ma cagnotte : </a> <span style="font-size: 1.2em;"></span><%= current_user.cagnotte.to_f.round(2) %> <i class="fas fa-euro-sign pr-1"></i></b></span>
         </li>
         <li class="nav-item dropdown">
           <%= cl_image_tag current_user.photo, class: "avatar dropdown-toggle photo_user", id:"navbarDropdown", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } %>
@@ -42,6 +38,9 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a href="/dashboard#abonnements"> <span class="dropdown-item notifications"><%= flash[:notifications] %></span></a>
           </div>
+        </li>
+        <li class="nav-item dropdown mr-2">
+          <span class="nav-link navbar-wagon-link pr-1" style="color:#5f6060;"><b> <a href="/dashboard#anchor" style="text-decoration: none;" > Ma cagnotte : </a> <span style="font-size: 1.2em;"></span><%= current_user.cagnotte.to_f.round(2) %> <i class="fas fa-euro-sign pr-1"></i></b></span>
         </li>
         <li class="nav-item dropdown">
           <img class="avatar dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png" />
