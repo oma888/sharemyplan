@@ -31,7 +31,8 @@
             <% end %>
           </div>
           <br>
-          <%= f.submit "Soumettre", class: "text-center btn btn-hp"  %>
+          <%= f.submit "", id: 'review-new-submit-link', class: "text-center btn btn-hp d-none" %>
+          <div id="review-new-submit" class="text-center btn btn-hp" style="cursor: pointer">Soumettre</div>
         <% end %>
       </div>
     </div>

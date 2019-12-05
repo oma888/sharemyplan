@@ -13,7 +13,8 @@ class ReviewPolicy < ApplicationPolicy
   end
 
   def create?
-    record.cotisation.user == user && record.cotisation.reviews.count < 1
+    true
+    # record.cotisation.user == user && record.cotisation.reviews.count < 1
   end
 
 end
